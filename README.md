@@ -1,4 +1,4 @@
-# dataview-spark-io-automator
+# Dataview Spark.io Automator
 This project provides a Spark IoT Automator for Dataview. Deployment can either be done by providing the automator with an API key and device id, or just an API key (TODO). Support for allowing dataview to handle spark.io access tokens is still being considered.
 
 ## Additional Requirements
