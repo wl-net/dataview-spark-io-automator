@@ -35,8 +35,8 @@ class DataviewSparkIoAutomator():
     def get_variable(self, varname):
       return None
 
-    def call_function(self, function, arguments):
-      return self.spark[self.device_id][function](**arguments)
+    def call_function(self, name, arguments):
+      return getattr(self.spark.devices[self.device_id], name)(*arguments)
 
 class DataviewRPCServer(aiohttp.server.ServerHttpProtocol):
     def __init__(self, dispatch_functions, auth_token):
@@ -156,11 +156,11 @@ def main():
     sslcontext.load_cert_chain(args.certfile, args.keyfile)
 
     loop = asyncio.get_event_loop()
-    c = DataviewSparkIoAutomator(os.environ.get('ACCESS_TOKEN'));
+    c = DataviewSparkIoAutomator(os.environ.get('SPARK_ACCESS_TOKEN'), os.environ.get('SPARK_DEVICE_ID'));
     f = loop.create_server(
-        lambda: DataviewSparkIoAutomator(
-          {'get_variable': lambda: c.get_variable(),
-            'call_function': lambda: c.call_function(),
+        lambda: DataviewRPCServer(
+          {'get_variable': lambda arguments: c.get_variable(arguments),
+           'call_function': lambda function, arguments: c.call_function(function, arguments),
           }, os.environ.get('RPCSERVER_TOKEN')
         ),
         args.host, args.port,
