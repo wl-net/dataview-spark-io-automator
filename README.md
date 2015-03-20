@@ -27,8 +27,14 @@ export RPCSERVER_TOKEN='GENERATED_TOKEN'
 
 ## Launching automator
 
-Be sure that you have generated the X.509 Server Certificate and exported the RPCSERVER_TOKEN environment variable, then:
+Be sure that you have generated the X.509 Server Certificate and exported the RPCSERVER_TOKEN environment variable. For spark.io connectivity you'll also need to set SPARK_ACCESS_TOKEN and SPARK_DEVICE_ID, then:
 
 <pre>
 $ python3 automator.py --tlscert cert.pem --tlskey server.pem
 </pre>
+
+
+## Testing
+
+<pre>
+curl --cacert ../dataview-spark-io-automator/cert.pem -H "Authorization: Token $RPCSERVER_TOKEN" https://localhost:8080/rpc -d '{"jsonrpc": "2.0", "method": "call_function", "params": ["YOUR_SPARKIO_COMMAND", ["PARAMS"]], "id": 1}' 
