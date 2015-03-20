@@ -1,5 +1,9 @@
 # dataview-spark-io-automator
-This project provides a Spark IoT Automator for Dataview. Deployment can either be done by providing the automator with an API key and device id, or just an API key. Support for allowing dataview to handle spark.io access tokens is still being considered.
+This project provides a Spark IoT Automator for Dataview. Deployment can either be done by providing the automator with an API key and device id, or just an API key (TODO). Support for allowing dataview to handle spark.io access tokens is still being considered.
+
+## Additional Requirements
+
+This automator depends on spyrk (https://pypi.python.org/pypi/spyrk) for Python 3.x
 
 ## Generating a X.509 Server Certificate
 
@@ -32,7 +36,6 @@ Be sure that you have generated the X.509 Server Certificate and exported the RP
 <pre>
 $ python3 automator.py --tlscert cert.pem --tlskey server.pem
 </pre>
-
 
 ## Testing
 
