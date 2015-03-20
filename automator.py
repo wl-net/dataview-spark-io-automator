@@ -23,17 +23,20 @@ def constant_time_equals(val1, val2):
         result |= ord(x) ^ ord(y)
     return result == 0
 
-import subprocess
+from spyrk import SparkCloud
+
 class DataviewSparkIoAutomator():
-    API_ENDPOINT = 'https://api.spark.io/v1/'
-    def __init__(self):
+
+    def __init__(self, access_token = None, device_id = None):
+      self.spark = SparkCloud(access_token)
+      self.device_id = device_id
       pass
 
-    def get_variable(self):
+    def get_variable(self, varname):
       return None
 
-    def call_function(self):
-      return None
+    def call_function(self, function, arguments):
+      return self.spark[self.device_id][function](**arguments)
 
 class DataviewRPCServer(aiohttp.server.ServerHttpProtocol):
     def __init__(self, dispatch_functions, auth_token):
@@ -153,7 +156,7 @@ def main():
     sslcontext.load_cert_chain(args.certfile, args.keyfile)
 
     loop = asyncio.get_event_loop()
-    c = DataviewRaspberryPiAutomator();
+    c = DataviewSparkIoAutomator(os.environ.get('ACCESS_TOKEN'));
     f = loop.create_server(
         lambda: DataviewSparkIoAutomator(
           {'get_variable': lambda: c.get_variable(),
