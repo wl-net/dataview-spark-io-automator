@@ -43,3 +43,4 @@ $ python3 automator.py --tlscert cert.pem --tlskey server.pem
 curl --cacert ../dataview-spark-io-automator/cert.pem \
 -H "Authorization: Token $RPCSERVER_TOKEN" https://localhost:8080/rpc \
 -d '{"jsonrpc": "2.0", "method": "call_function", "params": ["YOUR_SPARKIO_COMMAND", ["PARAMS"]], "id": 1}' 
+</pre>
